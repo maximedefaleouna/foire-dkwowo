@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+ 
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model StandRequest {
+  id              String   @id @default(cuid())
+  structureName   String
+  email           String
+  requesterName   String
+  activitySector  String
+  validated       Boolean  @default(false)
+  stand           Stand?   @relation(fields: [standId], references: [id])
+  standId         String? @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+
+
+model Compte {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  email     String   @unique
+  name      String   // Nom du représentant
+  stand     Stand    @relation(fields: [standId], references: [id])
+  standId   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Stand {
+  id              String     @id @default(cuid())
+  structureName   String
+  activitySector  String
+  articles        Article[]
+  compte          Compte?
+  standRequest    StandRequest?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+
+
+model Article {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  imageUrl    String
+  stand       Stand    @relation(fields: [standId], references: [id])
+  standId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
