@@ -1,4 +1,3 @@
-const { validateStandRequest } = require("../validators/standRequestValidator");
 const StandRequestService = require("../services/StandRequestService");
 
 class StandRequestController {

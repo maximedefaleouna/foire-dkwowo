@@ -17,7 +17,7 @@ datasource db {
 
 
 model StandRequest {
-  id              String   @id @default(cuid())
+  id             String   @id @default(cuid())
   structureName   String
   email           String
   requesterName   String
@@ -27,12 +27,13 @@ model StandRequest {
   standId         String? @unique
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
 }
 
 
 
 model Compte {
-  id        String   @id @default(cuid())
+  id             String   @id @default(cuid())
   username  String   @unique
   password  String
   email     String   @unique
@@ -50,6 +51,7 @@ model Stand {
   activitySector  String
   articles        Article[]
   compte          Compte?
+  maxArticles     Int        @default(5)
   standRequest    StandRequest?
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
