@@ -13,6 +13,10 @@ class StandRequestService {
     return StandRequestRepository.findAll();
   }
 
+  async getById(id) {
+    return StandRequestRepository.findById(id);
+  }
+
   async validateRequest(id) {
     const request = await StandRequestRepository.findById(id);
     if (!request) throw new Error("Demande introuvable");

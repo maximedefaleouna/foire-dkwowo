@@ -3,11 +3,17 @@ const articleService = require("../services/ArticleService");
 class ArticleController {
   async create(req, res) {
     try {
-      const { name, description, imageUrl } = req.body;
+      const { name, description } = req.body;
       const standId = req.user.standId; // récupéré depuis JWT
 
       if (!standId) {
         return res.status(403).json({ error: "Aucun stand associé" });
+      }
+
+      let imageUrl = null;
+      if (req.file) {
+        // Construis ici l’URL publique pour accéder à l’image uploadée
+        imageUrl = `/uploads/${req.file.filename}`;
       }
 
       const article = await articleService.createArticle(

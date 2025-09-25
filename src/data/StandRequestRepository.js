@@ -19,17 +19,6 @@ class StandRequestRepository {
       data,
     });
   }
-
-  async findById(id) {
-    return prisma.standRequest.findUnique({ where: { id } });
-  }
-
-  async update(id, data) {
-    return prisma.standRequest.update({
-      where: { id },
-      data,
-    });
-  }
 }
 
 module.exports = new StandRequestRepository();
